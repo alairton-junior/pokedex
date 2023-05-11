@@ -15,6 +15,7 @@ interface PokemonContextData {
     pokemons: IPokemon[];
     setCurrentPage: Dispatch<SetStateAction<number>>;
     totalPokemons: number;
+    currentPage: number;
     
 }
 
@@ -26,7 +27,7 @@ export function PokemonProvider({ children } : IPokemonProvider) {
 
     const [ pokemons, setPokemons ] = useState([]);
     const [ totalPokemons ] = useState(1281);
-    const [ currentPage, setCurrentPage ] = useState(1);
+    const [ currentPage, setCurrentPage ] = useState(0);
     const [ pokemonForPage ] = useState(30);
 
     useEffect(() => {
@@ -36,8 +37,12 @@ export function PokemonProvider({ children } : IPokemonProvider) {
             .then( (response) => setPokemons(response.data.results))
     }, [currentPage])
 
+  
+
+
+
     return (
-        <PokemonContext.Provider value={{pokemons, setCurrentPage, totalPokemons}}>
+        <PokemonContext.Provider value={{pokemons, currentPage, setCurrentPage, totalPokemons}}>
             { children }
         </PokemonContext.Provider>
     )
